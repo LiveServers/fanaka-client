@@ -1,13 +1,13 @@
 import {InMemoryCache} from "@apollo/client";
-import {simpleQuery} from "./reactiveVariables";
+import {breadCrumbList} from "./reactiveVariables";
 
 export const ApolloCache:InMemoryCache = new InMemoryCache({
     typePolicies:{
         Query:{
             fields:{
-                simpleQuery:{
+                breadCrumbList:{
                     read(){
-                        return simpleQuery()
+                        return breadCrumbList()
                     }
                 }
             }
