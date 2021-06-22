@@ -1,5 +1,5 @@
 import {InMemoryCache} from "@apollo/client";
-import {breadCrumbList} from "./reactiveVariables";
+import {breadCrumbList,cardData} from "./reactiveVariables";
 
 export const ApolloCache:InMemoryCache = new InMemoryCache({
     typePolicies:{
@@ -8,6 +8,11 @@ export const ApolloCache:InMemoryCache = new InMemoryCache({
                 breadCrumbList:{
                     read(){
                         return breadCrumbList()
+                    }
+                },
+                cardData:{
+                    read(){
+                        return cardData()
                     }
                 }
             }
