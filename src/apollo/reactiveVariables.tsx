@@ -1,6 +1,7 @@
 import {makeVar} from "@apollo/client";
 import * as Types from "../InterfacesEnumsTypes/Types/Type";
 import * as Constants from "../constants/constants";
+import * as Interfaces from "../InterfacesEnumsTypes/Interfaces/Interfaces";
 
 const initialBreadCrumbs: Types.TypeBreadCrumbs = [
     {
@@ -10,3 +11,8 @@ const initialBreadCrumbs: Types.TypeBreadCrumbs = [
 ]
 
 export const breadCrumbList = makeVar<Types.TypeBreadCrumbs>(initialBreadCrumbs);
+
+export const cardData = makeVar<Interfaces.Semester>({
+    text:"",
+    path:""
+});

@@ -4,6 +4,7 @@ import {useHistory,useLocation} from "react-router-dom";
 import {useReactiveVar} from "@apollo/client";
 import {makeStyles} from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import * as Interfaces from "../../InterfacesEnumsTypes/Interfaces/Interfaces";
 import * as Types from "../../InterfacesEnumsTypes/Types/Type";
 import {cardData,breadCrumbList} from "../../apollo/reactiveVariables";
@@ -29,7 +30,7 @@ const useStyles = makeStyles(theme=>({
     }
 }));
 
-const DisplayCards = ({icon:Icon,text,value}:Interfaces.DisplayCardsProps):JSX.Element=>{
+const SemesterCard = ({_id,year,semester,path}:Interfaces.SemesterCardProps):JSX.Element=>{
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
@@ -52,15 +53,15 @@ const DisplayCards = ({icon:Icon,text,value}:Interfaces.DisplayCardsProps):JSX.E
         history.push(value);
     },[history,location.pathname])
     return (
-        <div onClick={()=>handleClick(text,value)} className={classes.box}>
+        <div className={classes.box}>
             <IconButton size="small">
-                <Icon size="small" />
+                <LibraryBooksIcon />
             </IconButton>
             <Typography variant="subtitle2">
-                {text}
+                {semester}
             </Typography>
         </div>
     )
 }
 
-export default DisplayCards;
+export default React.memo(SemesterCard);

@@ -21,19 +21,23 @@ const useStyles = makeStyles(theme=>({
 const displayCardsDetails : Types.DisplayCards = [
     {
         icon:LibraryBooksIcon,
-        text:Constants.YEAR_ONE
+        text:Constants.YEAR_ONE,
+        value:Constants.VALUE_ONE
     },
     {
         icon:PersonIcon,
-        text:Constants.YEAR_TWO
+        text:Constants.YEAR_TWO,
+        value:Constants.VALUE_TWO
     },
     {
         icon:CreateIcon,
-        text: Constants.YEAR_THREE
+        text: Constants.YEAR_THREE,
+        value: Constants.VALUE_THREE
     },
     {
         icon:RecentActorsIcon,
-        text: Constants.YEAR_FOUR
+        text: Constants.YEAR_FOUR,
+        value:Constants.VALUE_FOUR
     },
     
 ]
@@ -43,8 +47,8 @@ export default function Dashboard():JSX.Element{
     return (
         <div className={classes.cardGrid}>
             {
-                displayCardsDetails.map(({icon,text},index)=>(
-                    <DisplayCards key={index} icon={icon} text={text} />
+                displayCardsDetails.map(({icon,text,value},index)=>(
+                    <DisplayCards key={index} value={value} icon={icon} text={text} />
                 ))
             }
         </div>

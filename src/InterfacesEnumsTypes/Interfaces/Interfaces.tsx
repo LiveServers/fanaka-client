@@ -16,5 +16,19 @@ export interface BreadCrumbs {
 
 export interface DisplayCardsProps {
     icon:any,
-    text:string
+    text:string,
+    value:string
+}
+
+export interface Semester {
+    text:string,
+    path:string,
+    
+}
+
+export interface SemesterCardProps {
+    _id:string,
+    year:string,
+    semester:string,
+    path:string
 }
