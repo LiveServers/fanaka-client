@@ -34,6 +34,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "make-badges": "istanbul-badges-readme",
+    "make-badges-custom-coverage-dir": "istanbul-badges-readme --coverageDir='../my-custom-coverage-directory'",
     "test": "jest --config ./src/jest.config.js",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --colors",
@@ -71,6 +73,7 @@
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.2",
     "history": "^5.0.0",
+    "istanbul-badges-readme": "^1.4.0",
     "jest": "^26.6.0",
     "jsdom": "^16.6.0",
     "jsdom-global": "^3.0.2",

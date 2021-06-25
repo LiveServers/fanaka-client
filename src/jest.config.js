@@ -7,6 +7,8 @@ module.exports = {
     "^.+\\.(ts||sjs||tsx||jsx)x?$": "babel-jest"
   },
   "testEnvironment": 'node',
+  "collectCoverage":true,
+  "coverageReporters": ["json-summary"],
   "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
   "moduleFileExtensions": [
     "ts",
