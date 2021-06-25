@@ -18,6 +18,7 @@ export interface DisplayCardsProps {
     icon:any,
     text:string,
     value:string
+    handleClick?:any
 }
 
 export interface Semester {

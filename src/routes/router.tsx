@@ -4,6 +4,7 @@ import Dashboard from "../pages/Dashboard";
 import NotFound from "../pages/NotFound";
 import Semester from "../pages/Semester";
 import Login from "../pages/Login";
+//const Dashboard = lazy(()=>import(/*webpackChunkName: "dashboard" */ "../pages/Dashboard"));
 
 const Router = ()=>{
     return (

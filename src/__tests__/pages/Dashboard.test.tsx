@@ -1,21 +1,19 @@
+import React from "react";
 import {shallow} from "enzyme";
-//import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import {makeStyles} from "@material-ui/core/styles";
 import DisplayCards from "../../components/Cards/DisplayCards";
 import Dashboard from "../../pages/Dashboard";
 
 
-// configure({adapter:new Adapter()});
-
-const useStyles = makeStyles(theme=>({
-    cardGrid:{
-        display:"grid",
-        gridTemplateColumns:"50% 50%",
-        gridTemplateRow:"minmax(50%,50%)",
-        placeItems:"center",
-        gridGap:"6%"
-    }
-}))
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
+    useLocation: () => ({
+      pathname: "/dashboard/firstyear"
+    }),
+    useHistory:jest.fn(() =>({
+        push:jest.fn()
+    })),
+  }));
 
 describe("dashboard page test",()=>{
 

@@ -29,30 +29,30 @@ const useStyles = makeStyles(theme=>({
     }
 }));
 
-const DisplayCards = ({icon:Icon,text,value}:Interfaces.DisplayCardsProps):JSX.Element=>{
+const DisplayCards = ({icon:Icon,text,value,handleClick}:Interfaces.DisplayCardsProps):JSX.Element=>{
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
     const valueFromBCrumbs = useReactiveVar(breadCrumbList);
 
-    const handleClick = React.useCallback((text:string,value:string)=>{
-        cardData({
-            text,
-            path:location.pathname,
-        });
+    // const handleClick = React.useCallback((text:string,value:string)=>{
+    //     cardData({
+    //         text,
+    //         path:location.pathname,
+    //     });
         
-        let bcrumbsValue : Interfaces.BreadCrumbs = {
-            name:text,
-            path:value
-        }
-        //we need to update the path in the breadcrumbs
-        breadCrumbList([...valueFromBCrumbs,bcrumbsValue]);
+    //     let bcrumbsValue : Interfaces.BreadCrumbs = {
+    //         name:text,
+    //         path:value
+    //     }
+    //     //we need to update the path in the breadcrumbs
+    //     breadCrumbList([...valueFromBCrumbs,bcrumbsValue]);
 
-        //we pass the route params here(dynamic)
-        history.push(value);
-    },[history,location.pathname])
+    //     //we pass the route params here(dynamic)
+    //     history.push(value);
+    // },[history,location.pathname])
     return (
-        <div onClick={()=>handleClick(text,value)} className={classes.box}>
+        <div data-testid="btn" onClick={()=>handleClick(text,value)} className={classes.box}>
             <IconButton size="small">
                 <Icon size="small" />
             </IconButton>

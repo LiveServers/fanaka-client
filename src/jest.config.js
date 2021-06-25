@@ -2,7 +2,6 @@ module.exports = {
   "roots": [
     "<rootDir>"
   ],
-  // modulePaths: ['<rootDir>/src'],
   "preset": 'ts-jest',
   "transform": {
     "^.+\\.(ts||sjs||tsx||jsx)x?$": "babel-jest"
@@ -29,20 +28,7 @@ module.exports = {
   "snapshotSerializers": ["enzyme-to-json/serializer"],
   "setupFilesAfterEnv": ["<rootDir>/setupEnzyme.ts"],
   "transformIgnorePatterns": [
-    "/node_modules/(?!@fullcalendar)"
+    "/node_modules/(?!MODULE_NAME_HERE).+\\.js$"
   ]
 }
    
-    //"setupTestFrameworkScriptFile": "C:\Users\BMWAU\Desktop\FANAKA\fanaka-client/src/setupEnzyme.ts",
-  // }
-
-// import type {Config} from '@jest/types';
-
-// // Sync object
-// const config: Config.InitialOptions = {
-//   verbose: true,
-//   coverageDirectory: 'coverage',
-//   setupFiles: ['./enzyme.config.ts'],
-//   testMatch: ['**/tests/**/*.tsx?(x)', '**/?(*.)+(spec|test).tsx?(x)']
-// };
-// export default config;
