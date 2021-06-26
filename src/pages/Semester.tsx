@@ -63,7 +63,7 @@ const Semester = (props:any) : JSX.Element=>{
     return (
 
         <>
-            <div className={classes.cardGrid}>
+            <div data-testid="semestercards" className={classes.cardGrid}>
                 {
                     (!loading && semesterData) && semesterData.getAllSemesters.map(({year,semester,path,_id}:Interfaces.SemesterCardProps,index:number)=>(
                         <SemesterCard key={index} year={year} semester={semester} path={path} _id={_id} />

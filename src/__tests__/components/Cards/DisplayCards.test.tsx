@@ -1,12 +1,19 @@
 import React from "react";
 import {shallow} from "enzyme";
+import { ApolloProvider } from "@apollo/client";
+import client from "../../../apollo/client";
+import {MemoryRouter } from "react-router-dom";
+import Dashboard from "../../../pages/Dashboard";
+import Semester from "../../../pages/Semester";
 import DisplayCards from "../../../components/Cards/DisplayCards";
 import IconButton from "@material-ui/core/IconButton";
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import Typography from "@material-ui/core/Typography";
+import {createMemoryHistory} from "history";
+
 
 //start testing
-
+const mockHistory = jest.fn();
 //this is set up for react-router-dom
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -14,25 +21,41 @@ jest.mock("react-router-dom", () => ({
       pathname: "/dashboard/firstyear"
     }),
     useHistory:jest.fn(() =>({
-        push:jest.fn()
+        push:mockHistory
     })),
   }));
 
 const handleClick = jest.fn();
 
 describe("display cards test case",()=>{
-    const displayCardProps = {
-        icon:<IconButton>
-            <LibraryBooksIcon />
-        </IconButton>,
-        text:"demo text for display cards",
-        value:"demo value for display cards",
-        handleClick
-    }
-    const wrapper = shallow(<DisplayCards {...displayCardProps} />);
+    let displayCardProps:any,wrapper : any,history:any,wrap:any,semester:any;
+    beforeAll(()=>{
+        displayCardProps = {
+            icon:<IconButton>
+                <LibraryBooksIcon />
+            </IconButton>,
+            text:"demo text for display cards",
+            value:"demo value for display cards",
+            handleClick
+        }
+        wrapper = shallow(<DisplayCards {...displayCardProps} />);
+        wrap = shallow(<Dashboard />);
+        semester = shallow(
+        <ApolloProvider client={client}>
+            <Semester />
+        </ApolloProvider>)
+        history = createMemoryHistory();
+      })
 
     it('should render displaycards component',()=>{
         expect(wrapper).toBeTruthy();
+    });
+
+    it("should have the correct pathname on first render",()=>{
+        <MemoryRouter initialEntries={["/dashboard"]}>
+            <Dashboard />
+        </MemoryRouter>
+        expect(wrap).toHaveLength(1);
     });
 
     it("should render its children",()=>{
@@ -48,4 +71,13 @@ describe("display cards test case",()=>{
         expect(displayCardProps.handleClick).toHaveBeenCalledTimes(1);
         expect(wrapper).toEqual(expect.objectContaining({}));
    });
+
+   it("should have semester route onclick",()=>{
+        <MemoryRouter initialEntries={['/dashboard/firstyear']}>
+            <Dashboard />
+        </MemoryRouter>
+        //expect(wrap).toHaveLength(0);
+        expect(semester).toHaveLength(1);
+    
+  });
 });

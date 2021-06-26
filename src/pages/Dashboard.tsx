@@ -68,7 +68,7 @@ export default function Dashboard():JSX.Element{
         history.push(value);
     },[history,location.pathname])
     return (
-        <div className={classes.cardGrid}>
+        <div data-testid="dashboard" className={classes.cardGrid}>
             {
                 displayCardsDetails.map(({icon,text,value},index)=>(
                     <DisplayCards handleClick={handleClick} key={index} value={value} icon={icon} text={text} />

@@ -8,7 +8,7 @@ module.exports = {
   },
   "testEnvironment": 'node',
   "collectCoverage":true,
-  "coverageReporters": ["json-summary"],
+  // "coverageReporters": ["json-summary"],
   "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
   "moduleFileExtensions": [
     "ts",

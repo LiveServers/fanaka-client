@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 export default function NotFound(){
     return (
-        <Link to="/">
+        <Link to="/dashboard">
             Go Home
         </Link>
     )
