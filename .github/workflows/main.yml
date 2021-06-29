@@ -1,5 +1,5 @@
 name: Fanaka Client CI
-
+skip_ci: true
 on:
   push:
     branches:
