@@ -124,11 +124,11 @@ const Semester = (props:any) : JSX.Element=>{
             </Formik> 
             {
                 open ? (
-                    <IconButton onClick={handleClick} color="secondary" size="small">
+                    <IconButton data-testid="open" onClick={handleClick} color="secondary" size="small">
                         <CancelIcon />
                     </IconButton>
                 ):(
-                    <IconButton onClick={handleClick} color="secondary" size="small">
+                    <IconButton data-testid="closed" id="closed" onClick={handleClick} color="secondary" size="small">
                         <AddBoxIcon />
                     </IconButton>
                 )

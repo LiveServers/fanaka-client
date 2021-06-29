@@ -9,7 +9,7 @@ const Router = ()=>{
     return (
         <Switch>
             <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/dashboard/:year" component={Semester}>
+            <Route path="/dashboard/:year" component={Semester}>
             <React.Suspense fallback={<h1>Loading</h1>}>
                 <Semester />
             </React.Suspense>
@@ -19,7 +19,7 @@ const Router = ()=>{
                 <Login />
             </React.Suspense>
             </Route>
-            <Route component={NotFound} />
+            <Route path="/404" component={NotFound} />
             <Redirect from="/" to="/dashboard" />
         </Switch>
     )
