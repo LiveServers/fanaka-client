@@ -7,6 +7,10 @@ import RecentActorsIcon from '@material-ui/icons/RecentActors';
 import DisplayCards from "../components/Cards/DisplayCards";
 import * as Constants from "../constants/constants";
 import * as Types from "../InterfacesEnumsTypes/Types/Type";
+import {cardData,breadCrumbList} from "../apollo/reactiveVariables";
+import {useHistory,useLocation} from "react-router-dom";
+import {useReactiveVar} from "@apollo/client";
+import * as Interfaces from "../InterfacesEnumsTypes/Interfaces/Interfaces";
 
 const useStyles = makeStyles(theme=>({
     cardGrid:{
@@ -44,11 +48,30 @@ const displayCardsDetails : Types.DisplayCards = [
 
 export default function Dashboard():JSX.Element{
     const classes = useStyles();
+    const history = useHistory();
+    const location = useLocation();
+    const valueFromBCrumbs = useReactiveVar(breadCrumbList);
+    const handleClick = React.useCallback((text:string,value:string)=>{
+        cardData({
+            text,
+            path:location.pathname,
+        });
+        
+        let bcrumbsValue : Interfaces.BreadCrumbs = {
+            name:text,
+            path:value
+        }
+        //we need to update the path in the breadcrumbs
+        breadCrumbList([...valueFromBCrumbs,bcrumbsValue]);
+
+        //we pass the route params here(dynamic)
+        history.push(value);
+    },[history,location.pathname])
     return (
-        <div className={classes.cardGrid}>
+        <div data-testid="dashboard" className={classes.cardGrid}>
             {
                 displayCardsDetails.map(({icon,text,value},index)=>(
-                    <DisplayCards key={index} value={value} icon={icon} text={text} />
+                    <DisplayCards handleClick={handleClick} key={index} value={value} icon={icon} text={text} />
                 ))
             }
         </div>

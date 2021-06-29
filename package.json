@@ -11,7 +11,6 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@types/apollo-upload-client": "^14.1.0",
-    "@types/jest": "^26.0.23",
     "@types/node": "^12.20.13",
     "@types/react": "^17.0.8",
     "@types/react-dom": "^17.0.5",
@@ -35,7 +34,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "make-badges": "istanbul-badges-readme",
+    "make-badges-custom-coverage-dir": "istanbul-badges-readme --coverageDir='../my-custom-coverage-directory'",
+    "test": "jest --config ./src/jest.config.js",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage --colors",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -55,5 +58,26 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/plugin-transform-modules-commonjs": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-flow": "^7.14.5",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.14.5",
+    "@types/enzyme": "^3.10.8",
+    "@types/jest": "^26.0.23",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
+    "babel-jest": "^26.6.0",
+    "enzyme": "^3.11.0",
+    "enzyme-to-json": "^3.6.2",
+    "history": "^5.0.0",
+    "istanbul-badges-readme": "^1.4.0",
+    "jest": "^26.6.0",
+    "jsdom": "^16.6.0",
+    "jsdom-global": "^3.0.2",
+    "ts-jest": "^27.0.3"
   }
 }
