@@ -4,6 +4,7 @@ const Semester = React.lazy(()=>import(/*webpackChunkName: "semester" */ "../pag
 const Login = React.lazy(()=>import(/*webpackChunkName: "login" */ "../pages/Login"));
 const Dashboard = React.lazy(()=>import(/*webpackChunkName:"dashboard" */ "../pages/Dashboard"));
 const NotFound = React.lazy(()=>import(/*webpackChunkName: "notFound" */ "../pages/NotFound"));
+const UnitsPage = React.lazy(()=>import(/*webpackChunkName:"unitsPage" */ "../pages/Units/Units"));
 
 
 const Router = ()=>{
@@ -14,12 +15,17 @@ const Router = ()=>{
                     <Dashboard />
                 </React.Suspense>
             </Route>
-            <Route path="/dashboard/:year">
-            <React.Suspense fallback={<h1>Loading</h1>}>
-                <Semester />
-            </React.Suspense>
+            <Route exact path="/dashboard/:year">
+                <React.Suspense fallback={<h1>Loading</h1>}>
+                    <Semester />
+                </React.Suspense>
             </Route>
-            <Route path="/login" component={Login} >
+            <Route exact path="/dashboard/:year/:semester">
+                <React.Suspense fallback={<h1>Loading</h1>}>
+                    <UnitsPage />
+                </React.Suspense>
+            </Route>
+            <Route path="/login" >
             <React.Suspense fallback={<h1>Loading</h1>}>
                 <Login />
             </React.Suspense>

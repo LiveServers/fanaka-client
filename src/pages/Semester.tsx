@@ -1,6 +1,7 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {useQuery,useMutation} from "@apollo/client";
+import {useQuery,useMutation,useReactiveVar} from "@apollo/client";
+import {useHistory} from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import {Formik,Form as FormikForm} from "formik";
 import IconButton from "@material-ui/core/IconButton";
@@ -14,6 +15,7 @@ import {BREAD_CRUMBS_QUERY} from "../graphql/queries/breadcrumbs";
 import {CREATE_SEMESTER} from "../graphql/mutations/createSemester";
 import {SEMESTER_QUERY} from "../graphql/queries/getAllSemester";
 import SemesterCard from "../components/Cards/SemesterCard";
+import {semesterCardProps,breadCrumbList} from "../apollo/reactiveVariables";
 
 const useStyles = makeStyles(theme=>({
     cardGrid:{
@@ -48,10 +50,12 @@ const SemesterValidation = Yup.object().shape({
 
 const Semester = (props:any) : JSX.Element=>{
     const classes = useStyles();
+    const history = useHistory();
     const [open,setOpen] = React.useState(false);
     const {data} = useQuery(CARD_DATA_QUERY);
     const semester:Interfaces.Semester = data.cardData;
     const [CreateSemesterMutation] = useMutation(CREATE_SEMESTER);
+    const valueFromBCrumbs = useReactiveVar(breadCrumbList);
     const {data:semesterData,loading} = useQuery(SEMESTER_QUERY,{
         variables:{
             year:semester.text
@@ -60,13 +64,29 @@ const Semester = (props:any) : JSX.Element=>{
     });
 
     const handleClick = React.useCallback(()=>{setOpen(!open)},[open]);
+    const handlePassSemesterProps = (year:string,semester:string,path:string,_id:string)=>{
+        semesterCardProps({
+            year,
+            semester,
+            path,
+            _id
+        })
+        let newPath = `${path}/${semester}`;
+        let bcrumbsValue: Interfaces.BreadCrumbs = {
+            name: semester,
+            path:newPath
+        }
+        history.push(`${path}/${semester}`)
+        breadCrumbList([...valueFromBCrumbs, bcrumbsValue]);
+        console.log(newPath)
+    }
     return (
 
         <>
             <div data-testid="semestercards" className={classes.cardGrid}>
                 {
                     (!loading && semesterData) && semesterData.getAllSemesters.map(({year,semester,path,_id}:Interfaces.SemesterCardProps,index:number)=>(
-                        <SemesterCard key={index} year={year} semester={semester} path={path} _id={_id} />
+                        <SemesterCard handlePassSemesterProps={handlePassSemesterProps} key={index} year={year} semester={semester} path={path} _id={_id} />
                     ))
                 }
             </div>

@@ -30,30 +30,14 @@ const useStyles = makeStyles(theme=>({
     }
 }));
 
-const SemesterCard = ({_id,year,semester,path}:Interfaces.SemesterCardProps):JSX.Element=>{
+const SemesterCard = ({_id,year,semester,path,handlePassSemesterProps}:any):JSX.Element=>{
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
     const valueFromBCrumbs = useReactiveVar(breadCrumbList);
 
-    const handleClick = React.useCallback((text:string,value:string)=>{
-        cardData({
-            text,
-            path:location.pathname,
-        });
-        
-        let bcrumbsValue : Interfaces.BreadCrumbs = {
-            name:text,
-            path:value
-        }
-        //we need to update the path in the breadcrumbs
-        breadCrumbList([...valueFromBCrumbs,bcrumbsValue]);
-
-        //we pass the route params here(dynamic)
-        history.push(value);
-    },[history,location.pathname])
     return (
-        <div className={classes.box}>
+        <div onClick={()=>handlePassSemesterProps(year,semester,path,_id)} className={classes.box}>
             <IconButton size="small">
                 <LibraryBooksIcon />
             </IconButton>

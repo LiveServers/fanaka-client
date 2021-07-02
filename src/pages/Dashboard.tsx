@@ -46,7 +46,7 @@ const displayCardsDetails : Types.DisplayCards = [
     
 ]
 
-export default function Dashboard():JSX.Element{
+function Dashboard():JSX.Element{
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
@@ -77,3 +77,5 @@ export default function Dashboard():JSX.Element{
         </div>
     )
 }
+
+export default React.memo(Dashboard);

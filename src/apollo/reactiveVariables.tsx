@@ -16,3 +16,10 @@ export const cardData = makeVar<Interfaces.Semester>({
     text:"",
     path:""
 });
+
+export const semesterCardProps = makeVar<Interfaces.SemesterCardProps>({
+    year:"", 
+    semester:"",
+    path:"", 
+    _id:""
+});
