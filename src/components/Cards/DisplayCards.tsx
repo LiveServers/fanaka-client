@@ -63,4 +63,4 @@ const DisplayCards = ({icon:Icon,text,value,handleClick}:Interfaces.DisplayCards
     )
 }
 
-export default DisplayCards;
+export default React.memo(DisplayCards);
