@@ -22,12 +22,13 @@ const BreadCrumbs = (): JSX.Element=>{
     const {data} = useQuery(BREAD_CRUMBS_QUERY);
     const location = useLocation();
     const breadCrumbList: Types.TypeBreadCrumbs = data.breadCrumbList;
-
+    console.log(breadCrumbList)
     const handleClick = React.useCallback((path:string,p:number)=>{
         if(location.pathname.split("/").join("")!==path.split("/").join("")){
             reactiveVars.breadCrumbList(breadCrumbList.filter(item=>item.path===path));
         }
     },[location])
+    console.log(breadCrumbList)
     return (
         <Breadcrumbs className={classes.breadcrumbs} aria-label="breadcrumbs">
             {
