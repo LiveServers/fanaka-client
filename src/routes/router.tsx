@@ -1,15 +1,20 @@
 import React from "react";
 import {Switch,Route,Redirect} from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
-import NotFound from "../pages/NotFound";
 const Semester = React.lazy(()=>import(/*webpackChunkName: "semester" */ "../pages/Semester"));
 const Login = React.lazy(()=>import(/*webpackChunkName: "login" */ "../pages/Login"));
+const Dashboard = React.lazy(()=>import(/*webpackChunkName:"dashboard" */ "../pages/Dashboard"));
+const NotFound = React.lazy(()=>import(/*webpackChunkName: "notFound" */ "../pages/NotFound"));
+
 
 const Router = ()=>{
     return (
         <Switch>
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route path="/dashboard/:year" component={Semester}>
+            <Route exact path="/dashboard" >
+                <React.Suspense fallback={<h1>Loading</h1>}>
+                    <Dashboard />
+                </React.Suspense>
+            </Route>
+            <Route path="/dashboard/:year">
             <React.Suspense fallback={<h1>Loading</h1>}>
                 <Semester />
             </React.Suspense>
@@ -19,7 +24,11 @@ const Router = ()=>{
                 <Login />
             </React.Suspense>
             </Route>
-            <Route path="/404" component={NotFound} />
+            <Route path="/404">
+                <React.Suspense fallback={<h1>Loading</h1>}>
+                    <NotFound />
+                </React.Suspense>
+            </Route>
             <Redirect from="/" to="/dashboard" />
         </Switch>
     )
