@@ -1,4 +1,4 @@
-import {gql} from "@apollo/client";
+import { gql } from '@apollo/client';
 
 const CARD_DATA_QUERY = gql `
     query CardData {

@@ -1,36 +1,35 @@
 module.exports = {
-  "roots": [
-    "<rootDir>"
+  roots: [
+    '<rootDir>',
   ],
-  "preset": 'ts-jest',
-  "transform": {
-    "^.+\\.(ts||sjs||tsx||jsx)x?$": "babel-jest"
+  preset: 'ts-jest',
+  transform: {
+    '^.+\\.(ts||sjs||tsx||jsx)x?$': 'babel-jest',
   },
-  "testEnvironment": 'node',
-  "collectCoverage":true,
+  testEnvironment: 'node',
+  collectCoverage: true,
   // "coverageReporters": ["json-summary"],
-  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
-  "moduleFileExtensions": [
-    "ts",
-    "tsx",
-    "js",
-    "jsx",
-    "json",
-    "node"
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
+  moduleFileExtensions: [
+    'ts',
+    'tsx',
+    'js',
+    'jsx',
+    'json',
+    'node',
   ],
-  "setupFiles": [
-    "<rootDir>/setupEnzyme.ts"
+  setupFiles: [
+    '<rootDir>/setupEnzyme.ts',
   ],
-  "globals": {
-    "ts-jest": {
-      "babelConfig": true,
-      "tsConfig": '<rootDir>/tsconfig.json'
-    }
+  globals: {
+    'ts-jest': {
+      babelConfig: true,
+      tsConfig: '<rootDir>/tsconfig.json',
+    },
   },
-  "snapshotSerializers": ["enzyme-to-json/serializer"],
-  "setupFilesAfterEnv": ["<rootDir>/setupEnzyme.ts"],
-  "transformIgnorePatterns": [
-    "/node_modules/(?!MODULE_NAME_HERE).+\\.js$"
-  ]
-}
-   
+  snapshotSerializers: ['enzyme-to-json/serializer'],
+  setupFilesAfterEnv: ['<rootDir>/setupEnzyme.ts'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!MODULE_NAME_HERE).+\\.js$',
+  ],
+};

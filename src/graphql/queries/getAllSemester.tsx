@@ -1,4 +1,4 @@
-import {gql} from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const SEMESTER_QUERY = gql `
     query getAllSemesters($year:String!){

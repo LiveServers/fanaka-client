@@ -1,58 +1,51 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import {useHistory,useLocation} from "react-router-dom";
-import {useReactiveVar} from "@apollo/client";
-import {makeStyles} from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import * as Interfaces from "../../InterfacesEnumsTypes/Interfaces/Interfaces";
-import * as Types from "../../InterfacesEnumsTypes/Types/Type";
-import {cardData,breadCrumbList} from "../../apollo/reactiveVariables";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import * as Interfaces from '../../InterfacesEnumsTypes/Interfaces/Interfaces';
 
 const useStyles = makeStyles(theme=>({
-    box:{
-        border:"1px solid #EDE7E7",
-        borderRadius:"10px",
-        background:"#CBA552",
-        backdropFilter:"blur(4px)",
-        display:"flex",
-        alignItems:"center",
-        flexDirection:"column",
-        justifyContent:"space-evenly",
-        width:"200px",
-        height:"200px",
-        gap:"2%",
-        [theme.breakpoints.down("sm")]:{
-            width:"110px",
-            height:"110px",
-            padding:"1rem"
-        }
-    }
+  box:{
+    border:'1px solid #EDE7E7',
+    borderRadius:'10px',
+    background:'#CBA552',
+    backdropFilter:'blur(4px)',
+    display:'flex',
+    alignItems:'center',
+    flexDirection:'column',
+    justifyContent:'space-evenly',
+    width:'200px',
+    height:'200px',
+    gap:'2%',
+    [theme.breakpoints.down('sm')]:{
+      width:'110px',
+      height:'110px',
+      padding:'1rem',
+    },
+  },
 }));
 
-const DisplayCards = ({icon:Icon,text,value,handleClick}:Interfaces.DisplayCardsProps):JSX.Element=>{
-    const classes = useStyles();
-    const history = useHistory();
-    const location = useLocation();
-    const valueFromBCrumbs = useReactiveVar(breadCrumbList);
+const DisplayCards = ({ icon:Icon, text, value, handleClick }:Interfaces.DisplayCardsProps):JSX.Element => {
+  const classes = useStyles();
 
-    // const handleClick = React.useCallback((text:string,value:string)=>{
-    //     cardData({
-    //         text,
-    //         path:location.pathname,
-    //     });
-        
-    //     let bcrumbsValue : Interfaces.BreadCrumbs = {
-    //         name:text,
-    //         path:value
-    //     }
-    //     //we need to update the path in the breadcrumbs
-    //     breadCrumbList([...valueFromBCrumbs,bcrumbsValue]);
+  // const handleClick = React.useCallback((text:string,value:string)=>{
+  //     cardData({
+  //         text,
+  //         path:location.pathname,
+  //     });
 
-    //     //we pass the route params here(dynamic)
-    //     history.push(value);
-    // },[history,location.pathname])
-    return (
-        <div data-testid="btn" onClick={()=>handleClick(text,value)} className={classes.box}>
+  //     let bcrumbsValue : Interfaces.BreadCrumbs = {
+  //         name:text,
+  //         path:value
+  //     }
+  //     //we need to update the path in the breadcrumbs
+  //     breadCrumbList([...valueFromBCrumbs,bcrumbsValue]);
+
+  //     //we pass the route params here(dynamic)
+  //     history.push(value);
+  // },[history,location.pathname])
+  return (
+        <div data-testid="btn" onClick={()=>handleClick(text, value)} className={classes.box}>
             <IconButton size="small">
                 <Icon size="small" />
             </IconButton>
@@ -60,7 +53,7 @@ const DisplayCards = ({icon:Icon,text,value,handleClick}:Interfaces.DisplayCards
                 {text}
             </Typography>
         </div>
-    )
-}
+  );
+};
 
 export default React.memo(DisplayCards);

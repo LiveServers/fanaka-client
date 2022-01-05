@@ -1,4 +1,4 @@
-import Constants from "../InterfacesEnumsTypes/Enums/Enums";
+import Constants from '../InterfacesEnumsTypes/Enums/Enums';
 
 export const PROJECTNAME : Constants = Constants.projectName;
 export const COURSE :Constants = Constants.course;

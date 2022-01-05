@@ -1,35 +1,35 @@
 
 export interface HeaderProps {
-    projectName: String,
-    course: String,
-    time?: String
+  projectName: String,
+  course: String,
+  time?: String
 }
 
 export interface FooterProps {
-    footerMessage:String
+  footerMessage:String
 }
 
 export interface BreadCrumbs {
-    name:string,
-    path:string
+  name:string,
+  path:string
 }
 
 export interface DisplayCardsProps {
-    icon:any,
-    text:string,
-    value:string
-    handleClick?:any
+  icon:any,
+  text:string,
+  value:string
+  handleClick?:any
 }
 
 export interface Semester {
-    text:string,
-    path:string,
+  text:string,
+  path:string,
     
 }
 
 export interface SemesterCardProps {
-    _id:string,
-    year:string,
-    semester:string,
-    path:string
+  _id:string,
+  year:string,
+  semester:string,
+  path:string
 }

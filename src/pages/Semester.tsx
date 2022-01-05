@@ -1,123 +1,125 @@
-import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {useQuery,useMutation,useReactiveVar} from "@apollo/client";
-import {useHistory} from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
-import {Formik,Form as FormikForm} from "formik";
-import IconButton from "@material-ui/core/IconButton";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { useQuery, useMutation, useReactiveVar } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import { Formik, Form as FormikForm } from 'formik';
+import IconButton from '@material-ui/core/IconButton';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import CancelIcon from '@material-ui/icons/Cancel';
 import Grid from '@material-ui/core/Grid';
-import * as Yup from "yup";
-import * as Interfaces from "../InterfacesEnumsTypes/Interfaces/Interfaces";
-import CARD_DATA_QUERY from "../graphql/queries/cardData";
-import {BREAD_CRUMBS_QUERY} from "../graphql/queries/breadcrumbs";
-import {CREATE_SEMESTER} from "../graphql/mutations/createSemester";
-import {SEMESTER_QUERY} from "../graphql/queries/getAllSemester";
-import SemesterCard from "../components/Cards/SemesterCard";
-import {semesterCardProps,breadCrumbList} from "../apollo/reactiveVariables";
+import { nanoid } from 'nanoid';
+import * as Yup from 'yup';
+import * as Interfaces from '../InterfacesEnumsTypes/Interfaces/Interfaces';
+import CARD_DATA_QUERY from '../graphql/queries/cardData';
+import { CREATE_SEMESTER } from '../graphql/mutations/createSemester';
+import { SEMESTER_QUERY } from '../graphql/queries/getAllSemester';
+import SemesterCard from '../components/Cards/SemesterCard';
+import { semesterCardProps, breadCrumbList } from '../apollo/reactiveVariables';
 
-const useStyles = makeStyles(theme=>({
-    cardGrid:{
-        display:"grid",
-        gridTemplateColumns:"50% 50%",
-        gridTemplateRow:"minmax(50%,50%)",
-        placeItems:"center",
-        gridGap:"6%"
+const useStyles = makeStyles(()=>({
+  cardGrid:{
+    display:'grid',
+    gridTemplateColumns:'50% 50%',
+    gridTemplateRow:'minmax(50%,50%)',
+    placeItems:'center',
+    gridGap:'6%',
+  },
+  textField: {
+    backgroundColor: 'white',
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#000',
     },
-    textField: {
-        backgroundColor: 'white',
-        '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#000',
-        },
-        '& .MuiOutlinedInput-root': {
-            borderRadius: 35,
-        },
-        '& .Mui-focused': {
-            borderColor: "#00AFAA"
-        },
-        '& .MuiOutlinedInput-marginDense': {
-            borderColor: "#00AFAA"
-        },
-        borderRadius: 35,
-        width: '100%',
+    '& .MuiOutlinedInput-root': {
+      borderRadius: 35,
     },
+    '& .Mui-focused': {
+      borderColor: '#00AFAA',
+    },
+    '& .MuiOutlinedInput-marginDense': {
+      borderColor: '#00AFAA',
+    },
+    borderRadius: 35,
+    width: '100%',
+  },
 }));
 
 const SemesterValidation = Yup.object().shape({
-    semester:Yup.string().required("This field is required")
+  semester:Yup.string().required('This field is required'),
 });
 
-const Semester = (props:any) : JSX.Element=>{
-    const classes = useStyles();
-    const history = useHistory();
-    const [open,setOpen] = React.useState(false);
-    const {data} = useQuery(CARD_DATA_QUERY);
-    const semester:Interfaces.Semester = data.cardData;
-    const [CreateSemesterMutation] = useMutation(CREATE_SEMESTER);
-    const valueFromBCrumbs = useReactiveVar(breadCrumbList);
-    const {data:semesterData,loading} = useQuery(SEMESTER_QUERY,{
-        variables:{
-            year:semester.text
-        },
-        fetchPolicy:"no-cache"
-    });
+const Semester = (props:any): JSX.Element => {
+  const classes = useStyles();
+  const history = useHistory();
+  const [open, setOpen] = React.useState(false);
+  const { data } = useQuery(CARD_DATA_QUERY);
+  const semester:Interfaces.Semester = data.cardData;
+  const [CreateSemesterMutation] = useMutation(CREATE_SEMESTER);
+  const valueFromBCrumbs = useReactiveVar(breadCrumbList);
+  const { data:semesterData, loading } = useQuery(SEMESTER_QUERY, {
+    variables:{
+      year:semester.text,
+    },
+    fetchPolicy:'cache-first',
+  });
 
-    const handleClick = React.useCallback(()=>{setOpen(!open)},[open]);
-    const handlePassSemesterProps = (year:string,semester:string,path:string,_id:string)=>{
-        semesterCardProps({
-            year,
-            semester,
-            path,
-            _id
-        })
-        let newPath = `${path}/${semester}`;
-        let bcrumbsValue: Interfaces.BreadCrumbs = {
-            name: semester,
-            path:newPath
-        }
-        history.push(`${path}/${semester}`)
-        breadCrumbList([...valueFromBCrumbs, bcrumbsValue]);
-        console.log(newPath)
-    }
-    return (
+  const handleClick = React.useCallback(()=>{setOpen(!open);}, [open]);
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const handlePassSemesterProps = (year:string, semester:string, path:string, _id:string)=>{
+    semesterCardProps({
+      year,
+      semester,
+      path,
+      _id,
+    });
+    const newPath = `${path}/${semester}/${_id}`;
+    const bcrumbsValue: Interfaces.BreadCrumbs = {
+      name: semester,
+      path:newPath,
+    };
+    history.push(`${path}/${semester}/${_id}`);
+    breadCrumbList([...valueFromBCrumbs, bcrumbsValue]);
+  };
+  return (
 
         <>
             <div data-testid="semestercards" className={classes.cardGrid}>
                 {
-                    (!loading && semesterData) && semesterData.getAllSemesters.map(({year,semester,path,_id}:Interfaces.SemesterCardProps,index:number)=>(
-                        <SemesterCard handlePassSemesterProps={handlePassSemesterProps} key={index} year={year} semester={semester} path={path} _id={_id} />
+                  // eslint-disable-next-line @typescript-eslint/no-shadow
+                    (!loading && semesterData) && semesterData.getAllSemesters.map(({ year, semester, path, _id }:Interfaces.SemesterCardProps)=>(
+                        <SemesterCard handlePassSemesterProps={handlePassSemesterProps} key={nanoid()} year={year} semester={semester} path={path} _id={_id} />
                     ))
                 }
             </div>
-            <Formik 
+            <Formik
                 initialValues={{
-                    semester:""
+                  semester:'',
                 }}
-            
+
                 onSubmit={(values)=>{
-                    //submit your form here
-                    CreateSemesterMutation({
-                        variables:{
-                            input:{
-                                semester:values.semester,
-                                year:semester.text,
-                                path:props.location.pathname
-                            }
-                        },
-                        refetchQueries:[{
-                            query: SEMESTER_QUERY,
-                            variables:{
-                                year:semester.text
-                            }
-                        }]
-                    });
-                    setOpen(!open);
+                  // submit your form here
+                  CreateSemesterMutation({
+                    variables:{
+                      input:{
+                        semester:values.semester,
+                        year:semester.text,
+                        // eslint-disable-next-line react/destructuring-assignment
+                        path:props.location.pathname,
+                      },
+                    },
+                    refetchQueries:[{
+                      query: SEMESTER_QUERY,
+                      variables:{
+                        year:semester.text,
+                      },
+                    }],
+                  });
+                  setOpen(!open);
                 }}
 
                 validationSchema={SemesterValidation}
             >
-                {({handleChange,handleBlur,submitForm,values,errors})=> open && (
+                {({ handleChange, handleBlur, submitForm, values, errors })=> open && (
                                 <Grid container alignItems="center" justify="center">
                                     <FormikForm>
                                         <TextField
@@ -132,29 +134,29 @@ const Semester = (props:any) : JSX.Element=>{
                                             margin="dense"
                                             variant="outlined"
                                         />
-                                    
+
                                     </FormikForm>
                                     <IconButton onClick={submitForm} color="secondary" size="small">
                                         <AddBoxIcon />
                                     </IconButton>
                                 </Grid>
-                       
-                            )
+
+                )
                     }
-            </Formik> 
+            </Formik>
             {
                 open ? (
                     <IconButton data-testid="open" onClick={handleClick} color="secondary" size="small">
                         <CancelIcon />
                     </IconButton>
-                ):(
+                ) : (
                     <IconButton data-testid="closed" id="closed" onClick={handleClick} color="secondary" size="small">
                         <AddBoxIcon />
                     </IconButton>
                 )
             }
         </>
-    )
-}
+  );
+};
 
 export default React.memo(Semester);
