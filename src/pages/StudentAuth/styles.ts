@@ -9,8 +9,9 @@ export const StyledSelect = withStyles(()=>({
   root: {
     backgroundColor: '#fff',
     borderRadius: 10,
+    outline:' 0.1px solid #000',
     paddingLeft: '35px',
-    height: '52px',
+    height: '40px',
     '& .MuiNativeSelect-icon': {
       paddingRight: '39px',
     },
@@ -51,19 +52,19 @@ export const StyledButton = withStyles(()=>({
     height: '40px',
     textAlign: 'center',
     color: '#000',
-    backgroundColor: '#fff',
+    backgroundColor: '#CBA552',
   },
 }))(Button);
 
 export const StyledTextField = withStyles(()=>({
   root:{
-    width: '348px',
-    height: '65px',
     borderRadius: 10,
     '& .MuiFilledInput-input':{
       padding: '0 0 0 35px !important',
-      height: '65px',
+      height: '55px',
       backgroundColor: '#fff',
+      borderRadius: 10,
+      outline:' 0.1px solid #000',
     },
     '&::placeholder':{
       color: 'black !important',

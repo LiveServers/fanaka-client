@@ -2,11 +2,12 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom';
 import Router from './routes/router';
-import Header from './containers/AppHeader/Header';
-import Footer from './containers/AppFooter/Footer';
-import BackButton from './components/BackButton';
-import * as Constants from './constants/constants';
-import getTimeOfDay from './utils/getTimeOfDay';
+// import Header from './containers/AppHeader/Header';
+// import Footer from './containers/AppFooter/Footer';
+// // import BackButton from './components/BackButton';
+// import * as Constants from './constants/constants';
+// import getTimeOfDay from './utils/getTimeOfDay';
+import ErrorHandler from './components/ErrorHandler';
 import './index.css';
 
 const useStyles = makeStyles(theme=>({
@@ -68,31 +69,21 @@ const useStyles = makeStyles(theme=>({
 const App = (): JSX.Element => {
   const classes = useStyles();
   const location = useLocation();
+  const path = location.pathname.split('/');
   return (
     <>
+      <ErrorHandler />
       {
-        location.pathname.split('/').includes('admin-dashboard') ? (
+        path.includes('admin-dashboard') ? (
           <>
             <div className={classes.adminGrid}>
               <Router />
             </div>
           </>
         ) : (
-          <div className={classes.centerAllContentVertically}>
-            <Header projectName={Constants.PROJECTNAME} course={Constants.COURSE} time={getTimeOfDay()} />
-            <div className={classes.inner}>
-              <div className={classes.alignBody}>
-                <div className={classes.setToStart}>
-                  {
-                    // @ts-ignore
-                    (location.pathname.replaceAll('/', '') !== 'dashboard') && <BackButton />
-                  }
+        // <div className={classes.centerAllContentVertically}>
                   <Router />
-                </div>
-              </div>
-            </div>
-            <Footer footerMessage={Constants.FOOTER_MESSAGE} />
-          </div>
+        // </div>
         )
       }
     </>

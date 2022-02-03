@@ -15,11 +15,16 @@ import AttachmentOutlinedIcon from '@material-ui/icons/AttachmentOutlined';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import { Drawer, useMediaQuery } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import CreateIcon from '@material-ui/icons/Create';
+import TransitEnterexitIcon from '@material-ui/icons/TransitEnterexit';
 import { useHistory } from 'react-router-dom';
+import { fileInfo } from '../../apollo/reactiveVariables';
 
 const useStyles = makeStyles(theme=>({
   list: {
-    width: 288,
+    width: '100%',
     marginTop: '32px',
   },
   fullList: {
@@ -75,7 +80,7 @@ const ApplicationWrapper = ({ active }:Props) => {
   const history = useHistory();
   const [open, setOpen] = React.useState(true);
   const [color, setColor] = React.useState('');
-  const [openCreate, setOpenCreate] = React.useState(false);
+  const [openCreate, setOpenCreate] = React.useState(true);
   const [drawer, setDrawer] = React.useState(false);
   const isMobileTablet = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -89,6 +94,10 @@ const ApplicationWrapper = ({ active }:Props) => {
     history.push(path);
     setColor('#CC9010');
     toggle();
+    fileInfo({
+      unit: '',
+      unitId: '',
+    });
   };
   return (
   	<>
@@ -141,13 +150,13 @@ const ApplicationWrapper = ({ active }:Props) => {
 									</ListItem>
 									<Collapse in={openCreate} timeout="auto" unmountOnExit>
 										<List component="div" disablePadding>
-											<ListItem className={clsx(active === 'create-file-info' && classes.createFileInfo, classes.nested)} button>
+											<ListItem style={{ backgroundColor:active === 'create-file-info' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/create-file-info')} className={clsx(active === 'create-file-info' && classes.createFileInfo, classes.nested)} button>
 												<ListItemIcon>
 													<InfoOutlinedIcon />
 												</ListItemIcon>
 												<ListItemText primary="Create File Info" />
 											</ListItem>
-											<ListItem button className={clsx(active === 'create-attach-files' && classes.createAttachFiles, classes.nested)}>
+											<ListItem style={{ backgroundColor:active === 'create-attach-files' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/create-attach-files')} button className={clsx(active === 'create-attach-files' && classes.createAttachFiles, classes.nested)}>
 												<ListItemIcon>
 													<AttachmentOutlinedIcon />
 												</ListItemIcon>
@@ -156,6 +165,56 @@ const ApplicationWrapper = ({ active }:Props) => {
 										</List>
 									</Collapse>
 								</List>
+                <List>
+                  <ListItem button onClick={()=>setOpenCreate(!openCreate)}>
+                    <ListItemIcon>
+                      <VisibilityIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="View Uploaded Files" />
+                    {openCreate ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                  <Collapse in={openCreate} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItem style={{ backgroundColor:active === 'uploaded-files-info' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/uploaded-files-info')} button className={clsx(active === 'uploaded-files-info' && classes.createFileInfo, classes.nested)}>
+                        <ListItemIcon>
+                          <InfoOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="File Info" />
+                      </ListItem>
+                      <ListItem style={{ backgroundColor:active === 'uploaded-files-view' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/uploaded-files-view')} button className={clsx(active === 'uploaded-files-view' && classes.createAttachFiles, classes.nested)}>
+                        <ListItemIcon>
+                          <AttachmentOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Files" />
+                      </ListItem>
+                    </List>
+                  </Collapse>
+                </List>
+                <List>
+                  <ListItem button onClick={handleClick}>
+                    <ListItemIcon>
+                      <MeetingRoomIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Rooms" />
+                    {open ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                  <Collapse in={open} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItem style={{ backgroundColor:active === 'create-room' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/create-room')} button className={clsx(active === 'create-room' && classes.fileInfo, classes.nested)}>
+                        <ListItemIcon>
+                          <CreateIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Create Room" />
+                      </ListItem>
+                      <ListItem style={{ backgroundColor:active === 'join-room' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/join-room')} className={clsx(active === 'join-room' && classes.attachFiles, classes.nested)} button>
+                        <ListItemIcon>
+                          <TransitEnterexitIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Join Room" />
+                      </ListItem>
+                    </List>
+                  </Collapse>
+                </List>
 							</div>
 						</Drawer>
 						</>
@@ -204,13 +263,13 @@ const ApplicationWrapper = ({ active }:Props) => {
 									</ListItem>
 									<Collapse in={openCreate} timeout="auto" unmountOnExit>
 										<List component="div" disablePadding>
-											<ListItem button className={clsx(active === 'create-file-info' && classes.createFileInfo, classes.nested)}>
+											<ListItem style={{ backgroundColor:active === 'create-file-info' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/create-file-info')} button className={clsx(active === 'create-file-info' && classes.createFileInfo, classes.nested)}>
 												<ListItemIcon>
 													<InfoOutlinedIcon />
 												</ListItemIcon>
 												<ListItemText primary="Create File Info" />
 											</ListItem>
-											<ListItem button className={clsx(active === 'create-attach-files' && classes.createAttachFiles, classes.nested)}>
+											<ListItem style={{ backgroundColor:active === 'create-attach-files' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/create-attach-files')} button className={clsx(active === 'create-attach-files' && classes.createAttachFiles, classes.nested)}>
 												<ListItemIcon>
 													<AttachmentOutlinedIcon />
 												</ListItemIcon>
@@ -219,6 +278,56 @@ const ApplicationWrapper = ({ active }:Props) => {
 										</List>
 									</Collapse>
 								</List>
+                <List>
+                  <ListItem button onClick={()=>setOpenCreate(!openCreate)}>
+                    <ListItemIcon>
+                      <VisibilityIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="View Uploaded Files" />
+                    {openCreate ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                  <Collapse in={openCreate} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItem style={{ backgroundColor:active === 'uploaded-files-info' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/uploaded-files-info')} button className={clsx(active === 'uploaded-files-info' && classes.createFileInfo, classes.nested)}>
+                        <ListItemIcon>
+                          <InfoOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="File Info" />
+                      </ListItem>
+                      <ListItem style={{ backgroundColor:active === 'uploaded-files-view' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/uploaded-files-view')} button className={clsx(active === 'uploaded-files-view' && classes.createAttachFiles, classes.nested)}>
+                        <ListItemIcon>
+                          <AttachmentOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Files" />
+                      </ListItem>
+                    </List>
+                  </Collapse>
+                </List>
+                <List>
+                  <ListItem button onClick={()=>setOpenCreate(!openCreate)}>
+                    <ListItemIcon>
+                      <MeetingRoomIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Rooms" />
+                    {openCreate ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                  <Collapse in={openCreate} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItem style={{ backgroundColor:active === 'create-room' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/create-room')} button className={clsx(active === 'create-room' && classes.fileInfo, classes.nested)}>
+                        <ListItemIcon>
+                          <CreateIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Create Room" />
+                      </ListItem>
+                       <ListItem style={{ backgroundColor:active === 'join-room' ? color : '' }} onClick={()=>handleNavigate('/admin-dashboard/join-room')} className={clsx(active === 'join-room' && classes.attachFiles, classes.nested)} button>
+                        <ListItemIcon>
+                          <TransitEnterexitIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Join Room" />
+                       </ListItem>
+                    </List>
+                  </Collapse>
+                </List>
 							</div>
 						</div>
 					</>

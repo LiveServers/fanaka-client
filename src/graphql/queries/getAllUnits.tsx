@@ -1,18 +1,10 @@
 import { gql } from '@apollo/client';
 
 const GET_ALL_UNITS = gql `
-    query getAllUnits($semester:String!){
-       getAllUnits(semester:$semester){
-        author
-        year
+    query getAllUnits($courseCode:String!){
+       getAllUnits(courseCode:$courseCode){
         unitName
-        semester{
-            _id
-            year
-            semester
-            path
-        }
-        files
+        _id
     }
 }
 `;

@@ -5,9 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { Form as FormikForm, Formik } from 'formik';
 import FilesDropZone from './FilesDropZone';
-import { errorHandler, fileInfo } from '../../../apollo/reactiveVariables';
+import { errorHandler, createUnit } from '../../../apollo/reactiveVariables';
 import * as Styled from './styles';
-import UPLOAD_TO_EXISTING_UNIT from '../../../graphql/mutations/uploadFilesToExistingUnit';
+import CREATE_UNIT from '../../../graphql/mutations/createUnit';
 
 const useStyles = makeStyles((theme)=>({
   uploadGrid: {
@@ -47,13 +47,13 @@ const useStyles = makeStyles((theme)=>({
 
 const Upload = ()=>{
   const classes = useStyles();
-  const value = useReactiveVar(fileInfo);
+  const value = useReactiveVar(createUnit);
   const history = useHistory();
-  const [UploadToExistingUnit, { loading }] = useMutation(UPLOAD_TO_EXISTING_UNIT);
+  const [CreateUnit, { loading }] = useMutation(CREATE_UNIT);
 
   React.useEffect(()=>{
-    if (!value.unit){
-      history.push('/admin-dashboard/file-info');
+    if (!value.year){
+      history.push('/admin-dashboard/create-file-info');
     }
   }, [value]);
   return (
@@ -64,18 +64,24 @@ const Upload = ()=>{
 
       onSubmit={async (values)=>{
         // submit this form
-        await UploadToExistingUnit({
+        await CreateUnit({
           variables: {
             input: {
-              unitName: value.unit, files: values.images, unitId: value.unitId,
+              unitName: value.unit, files: values.images, semester: value.semester, year: value.year,
+              school: value.school, certification: value.certification, programme: value.programme, courseCode: value.courseCode,
             },
           },
         }).then(()=> {
-          fileInfo({
+          createUnit({
+            year: '',
+            semester: '',
             unit: '',
-            unitId: '',
+            school: '',
+            certification: '',
+            programme: '',
+            courseCode: '',
           });
-          history.push('/admin-dashboard/file-info');
+          history.push('/admin-dashboard/create-file-info');
         }).catch(()=>{
           errorHandler({
             open: true,
@@ -84,24 +90,22 @@ const Upload = ()=>{
         });
 
       }}
-
-      // validationSchema={LoginValidation}
     >
       {({ values, setFieldValue, submitForm })=>(
-          <FormikForm>
-            <div className={classes.uploadGrid}>
-              <FilesDropZone setFieldValue={setFieldValue} classes={classes} />
-              <div style={{ marginTop: '20px' }}>
-                {
-                  loading ? <CircularProgress /> : (
-                    <Styled.StyledButton disabled={values.images.length < 1} onClick={submitForm}>
-                      Submit
-                    </Styled.StyledButton>
-                  )
-                }
-              </div>
+        <FormikForm>
+          <div className={classes.uploadGrid}>
+            <FilesDropZone setFieldValue={setFieldValue} classes={classes} />
+            <div style={{ marginTop: '20px' }}>
+              {
+                loading ? <CircularProgress /> : (
+                  <Styled.StyledButton disabled={values.images.length < 1} onClick={submitForm}>
+                    Submit
+                  </Styled.StyledButton>
+                )
+              }
             </div>
-          </FormikForm>
+          </div>
+        </FormikForm>
       )}
     </Formik>
   );

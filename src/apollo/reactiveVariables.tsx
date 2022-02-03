@@ -18,8 +18,48 @@ export const cardData = makeVar<Interfaces.Semester>({
 });
 
 export const semesterCardProps = makeVar<Interfaces.SemesterCardProps>({
-  year:'', 
+  year:'',
   semester:'',
-  path:'', 
+  path:'',
   _id:'',
 });
+
+export const fileInfo = makeVar({
+  unit: '',
+  unitId: '',
+});
+
+export const createUnit = makeVar({
+  year: '',
+  semester: '',
+  unit: '',
+  school: '',
+  certification: '',
+  programme: '',
+  courseCode: '',
+});
+
+export const fileView = makeVar({
+  unit: '',
+  unitId: '',
+});
+
+export const errorHandler = makeVar({
+  open: false,
+  message: '',
+});
+
+export const files = makeVar([] as any);
+
+export const studentId = makeVar('');
+
+export const studentFileData = makeVar({
+  courseCode: '',
+  fileNames: [] as any,
+  files: [] as any,
+});
+
+export const setFile = makeVar('');
+export const setRoom = makeVar('');
+export const setRoomId = makeVar('');
+export const setMessages = makeVar([] as any);
